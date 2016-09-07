@@ -4,39 +4,53 @@ var newGame = function(){
 	return number;
 }
 
+var counter = 0;
+
+// var guessCounter = function(count){
+// 	var count = count;
+// 	count++;
+// 	console.log(count)
+// }
+function guessCounter () {
+
+};
+
 var number = newGame();
 
 var checkGuess = function(guess) {
-	if (Math.abs(number - guess) >= 50) {
-		$('#guessList').text("BRR Cold! +50 away");
+	if (guess > 100 || guess < 0){
+		alert("Please choose a number between 1 - 100")
+	}
+	else if (Math.abs(number - guess) >= 50) {
+		$('#feedback').text("BRR Ice cold");
 		console.log("cold!");
 	}
 	else if (Math.abs(number - guess) >= 40) {
-		$('#guessList').text('Ice is melting! You\'re within 50 numbers!');
+		$('#feedback').text('Cold');
 		console.log("Ice is melting");
 	}
 	else if (Math.abs(number - guess) >= 30) {
-		$('#guessList').text('Getting a little warm! less than 40!');
+		$('#feedback').text('Lukewarm');
 		console.log('getting a little warm');
 	}
 	else if (Math.abs(number - guess) >= 20) {
-		$('#guessList').text('Starting to sweat in here! Less than 30!');
+		$('#feedback').text('Kind of Warm');
 		console.log('Starting to sweat in here!');
 	}
 	else if (Math.abs(number - guess) >= 10) {
-		$('#guessList').text('You\'re getting hot! less than 20!');
+		$('#feedback').text('its gettin kinda hot');
 		console.log("Hotter!");
 	}
 	else if (Math.abs(number - guess) >= 5) {
-		$('#guessList').text('Burning Hot! less than ten!');
+		$('#feedback').text('Hot!!!');
 		console.log("Burning Hot!!!")
 	}
 	else if (Math.abs(number - guess) >=1) {
-		$('#guessList').text('You\'re on fire!!! You are 5 characters away!!!');
+		$('#feedback').text('You\'re on fire!!!');
 		console.log("YOU'RE ON FIRE!");
 	}
 	else if (number === guess) {
-		$('#guessList').text('You got it!');
+		$('#feedback').text('You got it!');
 		alert('You got it! Press new game to play again!');
 		console.log("You got it!!!!")
 	}
@@ -44,7 +58,7 @@ var checkGuess = function(guess) {
 
 
 $(document).ready(function(){
-	
+
 	/*--- Display information modal box ---*/
   	$(".what").click(function() {
     	$(".overlay").fadeIn(1000);
@@ -58,19 +72,22 @@ $(document).ready(function(){
 
 
   	$('form').submit(function() {
+  		counter++;
+  		$('#count').text(counter);
   		var node = $('#userGuess');
-  		var count = $('#count');
   		var guess = parseInt(node.val());
-  		var counter = parseInt(count.val()[0]);
-  		console.log(guess);
   		checkGuess(guess);
   		node.val('');
+ 		$("#guessList").append("<li>" + counter + "</li>")
   		return false;
   	});
 
   	$(".new").click(function() {
-  		newGame();
   		$('#guessList').text('')
+  		$('#feedback').text('Make your Guess!')
+  		$('#count').text(0)
+  		newGame();
+  		
   	})
 
 
